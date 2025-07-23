@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Plus, Save, X } from 'lucide-react';
 
 interface CommunityRulesProps {
   reglas: string[];
@@ -18,33 +19,41 @@ const CommunityRules: React.FC<CommunityRulesProps> = ({ reglas, editable }) => 
   };
 
   return (
-    <div className="bg-gray-50 rounded p-4 mb-4">
+    <div className="card">
+      <div className="card-body">
       <div className="flex items-center mb-2">
         <h2 className="font-semibold text-lg flex-1">Reglas de la comunidad</h2>
         {editable && (
-          <button className="text-blue-600 text-sm" onClick={() => setEditing(!editing)}>
-            {editing ? 'Guardar' : 'Editar'}
+          <button 
+            className={`btn btn-sm ${editing ? 'btn-success' : 'btn-secondary'}`}
+            onClick={() => setEditing(!editing)}
+          >
+            {editing ? <><Save size={16} /> Guardar</> : 'Editar'}
           </button>
         )}
       </div>
       <ul className="list-disc pl-6 text-gray-700">
         {rules.map((r, i) => (
-          <li key={i}>{r}</li>
+          <li key={i} className="mb-1">{r}</li>
         ))}
       </ul>
       {editable && editing && (
-        <div className="mt-2 flex gap-2">
+        <div className="mt-4 p-4 bg-slate-50 rounded-lg">
+          <div className="flex gap-2">
           <input
-            className="border rounded px-2 py-1 flex-1"
+            className="form-input flex-1"
             value={newRule}
             onChange={e => setNewRule(e.target.value)}
             placeholder="Nueva regla"
           />
-          <button className="bg-green-500 text-white px-3 py-1 rounded" onClick={handleAddRule}>
+          <button className="btn btn-success" onClick={handleAddRule}>
+            <Plus size={16} />
             Agregar
           </button>
+          </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

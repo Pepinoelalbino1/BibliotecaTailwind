@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PlanBadge from './PlanBadge';
 
 // Simulación de datos
@@ -23,13 +24,26 @@ const communities = [
 
 const CommunityList: React.FC = () => {
   // Simulación de autenticación
-  const isAuthenticated = false;
+  const isAuthenticated = true; // Cambiado para mostrar funcionalidad
+  
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Comunidades</h1>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Comunidades</h1>
+          <p className="text-slate-600">Únete a comunidades de lectores y comparte tus experiencias</p>
+        </div>
+        {isAuthenticated && (
+          <Link to="/comunidades/crear" className="btn btn-primary">
+            Crear Comunidad
+          </Link>
+        )}
+      </div>
+      
       <div className="grid gap-4">
         {communities.map((c) => (
-          <div key={c.id} className="flex items-center bg-white rounded shadow p-4 gap-4">
+          <div key={c.id} className="card">
+            <div className="card-body flex items-center gap-4">
             <img src={c.imagen} alt={c.nombre} className="w-20 h-20 rounded object-cover" />
             <div className="flex-1">
               <h2 className="text-lg font-semibold">{c.nombre}</h2>
@@ -37,9 +51,10 @@ const CommunityList: React.FC = () => {
               <span className="text-xs text-gray-400">{c.biblioteca}</span>
             </div>
             <PlanBadge tipoPlan={c.plan.tipoPlan} capacidadInteg={c.plan.capacidadInteg} />
-            <button className="ml-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            <Link to={`/comunidades/${c.id}`} className="btn btn-primary">
               {isAuthenticated ? 'Ver Detalle' : 'Unirse'}
-            </button>
+            </Link>
+            </div>
           </div>
         ))}
       </div>

@@ -12,6 +12,7 @@ import ReservationsPage from './biblioteca/reservations/ReservationsPage';
 import MyReservationsPage from './biblioteca/reservations/MyReservationsPage';
 import ClientHeader from './biblioteca/shared/ClientHeader';
 import ClientFooter from './biblioteca/shared/ClientFooter';
+import { CommunityList, CommunityDetail, CommunityForm } from './biblioteca/features';
 
 const ClientApp: React.FC = () => {
   return (
@@ -29,6 +30,10 @@ const ClientApp: React.FC = () => {
           <Route path="/biblioteca/:id" element={<LibraryDetailPage />} />
           <Route path="/reservas" element={<ReservationsPage />} />
           <Route path="/mis-reservas" element={<MyReservationsPage />} />
+          <Route path="/comunidades" element={<CommunityList />} />
+          <Route path="/comunidades/:id" element={<CommunityDetail />} />
+          <Route path="/comunidades/crear" element={<CommunityForm />} />
+          <Route path="/comunidades/:id/editar" element={<CommunityForm isEdit={true} />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
