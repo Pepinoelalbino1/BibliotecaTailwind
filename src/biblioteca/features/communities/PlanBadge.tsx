@@ -1,28 +1,52 @@
 import React from 'react';
+import { Crown, Star, Zap } from 'lucide-react';
 
 interface PlanBadgeProps {
   tipoPlan: 'freemium' | 'pro' | 'master';
   capacidadInteg: number;
 }
 
-const planColors = {
-  freemium: 'bg-green-200 text-green-800',
-  pro: 'bg-yellow-200 text-yellow-800',
-  master: 'bg-purple-200 text-purple-800',
+const planConfig = {
+  freemium: {
+    label: 'Freemium',
+    icon: Zap,
+    className: 'bg-emerald-100 text-emerald-700 border border-emerald-200',
+    description: 'Plan básico'
+  },
+  pro: {
+    label: 'Pro',
+    icon: Star,
+    className: 'bg-blue-100 text-blue-700 border border-blue-200',
+    description: 'Plan profesional'
+  },
+  master: {
+    label: 'Master',
+    icon: Crown,
+    className: 'bg-purple-100 text-purple-700 border border-purple-200',
+    description: 'Plan premium'
+  },
 };
 
-const planLabels = {
-  freemium: 'Freemium',
-  pro: 'Pro',
-  master: 'Master Master DU',
+const PlanBadge: React.FC<PlanBadgeProps> = ({ tipoPlan, capacidadInteg }) => {
+  const config = planConfig[tipoPlan];
+  const Icon = config.icon;
+  
+  const capacityText = tipoPlan === 'master' 
+    ? 'Ilimitado' 
+    : `${capacidadInteg} miembros`;
+
+  return (
+    <div 
+      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${config.className}`}
+      title={`${config.description} - ${capacityText}`}
+    >
+      <Icon size={14} />
+      <span>{config.label}</span>
+      {tipoPlan !== 'master' && (
+        <span className="opacity-75">({capacidadInteg})</span>
+      )}
+    </div>
+  );
 };
 
-const PlanBadge: React.FC<PlanBadgeProps> = ({ tipoPlan, capacidadInteg }) => (
-  <span className={`px-2 py-1 rounded text-xs font-bold ${planColors[tipoPlan]}`}
-    title={`Hasta ${tipoPlan === 'master' ? 'ilimitado' : capacidadInteg + ' personas'}`}
-  >
-    {planLabels[tipoPlan]}{tipoPlan !== 'master' && ` (${capacidadInteg})`}
-  </span>
-);
-
-export default PlanBadge; 
+export default PlanBadge;
